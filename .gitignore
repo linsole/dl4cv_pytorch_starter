@@ -1,5 +1,6 @@
 # ignore dataset directory due to the file size
 dataset/
+utility/*.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
