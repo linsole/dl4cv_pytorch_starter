@@ -4,8 +4,7 @@
 from torch.utils.data import Dataset, DataLoader
 import pandas as pd
 from torchvision.io import read_image
-from torchvision.transforms import Resize, CenterCrop
-from torchvision.transforms import InterpolationMode
+from torchvision.transforms import CenterCrop
 import matplotlib.pyplot as plt
 
 # implement custom dataset, modify code from official pytorch tutorial:
