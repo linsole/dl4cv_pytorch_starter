@@ -3,7 +3,7 @@
 # import the necessary packages
 from torch.utils.data import Dataset, DataLoader
 import pandas as pd
-from torchvision.io import read_image
+from PIL import Image
 from torchvision.transforms import CenterCrop
 import matplotlib.pyplot as plt
 
@@ -20,14 +20,13 @@ class DatasetAnimals(Dataset):
 
     def __getitem__(self, idx):
         img_path = self.img_labels.iloc[idx, 1]
-        image = read_image(img_path)
+        image = Image.open(img_path).convert('RGB')
         label = self.img_labels.iloc[idx, 2]
 
         # use the passed transform list and apply preprocessor 
         # one by one to each image
         if self.transform:
-            for preprocessor in self.transform:
-                image = preprocessor(image)
+            image = self.transform(image)
 
         # also transform label if passed not-None value
         if self.label_transform:
@@ -39,7 +38,7 @@ if __name__ == "__main__":
     # instantiate the preprocessor for resizing, then instantiate 
     # dataset and data loader
     preprocessor = [CenterCrop([200])]
-    dataset = DatasetAnimals("animals.csv", transform=preprocessor)
+    dataset = DatasetAnimals("utility/animals.csv", transform=preprocessor)
     data_loader = DataLoader(dataset, batch_size=1, shuffle=False)
 
     # iterate *once* through the data loader to see the feature and label size, 
