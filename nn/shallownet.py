@@ -13,15 +13,13 @@ class ShallowNet(nn.Module):
     def __init__(self):
         super(ShallowNet, self).__init__()
         self.conv = nn.Conv2d(3, 32, kernel_size=3, padding=1)
-        self.fc = nn.Linear(90000, 3)
+        self.fc = nn.Linear(32768, 3)
 
     def forward(self, x):
-        x = self.conv(x)
-        # if input and output have same dimension size, we can use this trick to save memory
-        x[:] = F.relu(x)
-        x = torch.flatten(x)
+        x = F.relu(self.conv(x))
+        x = torch.flatten(x, 1)
         x = self.fc(x)
-        x[:] = F.softmax(x)
+        x = F.softmax(x)
         return x
 
 # script code for testing my ShallowNet class
