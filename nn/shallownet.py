@@ -19,7 +19,7 @@ class ShallowNet(nn.Module):
         x = F.relu(self.conv(x))
         x = torch.flatten(x, 1)
         x = self.fc(x)
-        x = F.softmax(x)
+        x = F.softmax(x, dim=1)
         return x
 
 # script code for testing my ShallowNet class
